@@ -1,22 +1,30 @@
 <template>
-  <el-container style="height:100vh">
-    <!-- 左侧导航 -->
+  <el-container class="app-layout">
     <el-aside width="220px" class="sidebar">
       <div class="logo-area">
         <el-icon :size="28" color="#4da6ff"><Monitor /></el-icon>
         <span class="logo-text">税务AI智能体</span>
       </div>
-      <el-menu :default-active="route.path" router background-color="#0d1b3e" text-color="#a0b4d0" active-text-color="#4da6ff" class="sidebar-menu">
-        <el-menu-item index="/"><el-icon><DataBoard /></el-icon><span>工作台</span></el-menu-item>
-        <el-menu-item index="/invoice"><el-icon><Document /></el-icon><span>发票税务分析</span></el-menu-item>
-        <el-menu-item index="/taxsource"><el-icon><OfficeBuilding /></el-icon><span>重点税源分析</span></el-menu-item>
-        <el-menu-item index="/knowledge"><el-icon><Collection /></el-icon><span>知识库管理</span></el-menu-item>
-        <el-menu-item index="/settings"><el-icon><Setting /></el-icon><span>系统设置</span></el-menu-item>
+      <el-menu
+        :default-active="route.path"
+        router
+        background-color="#0d1b3e"
+        text-color="#a0b4d0"
+        active-text-color="#4da6ff"
+        class="sidebar-menu"
+      >
+        <el-menu-item
+          v-for="item in navigationItems"
+          :key="item.path"
+          :index="item.path"
+        >
+          <el-icon><component :is="item.icon" /></el-icon>
+          <span>{{ item.label }}</span>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
     <el-container>
-      <!-- 顶部栏 -->
       <el-header class="header">
         <div class="header-left">
           <span class="header-title">河南省税务局 · 税务AI智能体平台</span>
@@ -35,7 +43,6 @@
         </div>
       </el-header>
 
-      <!-- 主内容 -->
       <el-main class="main-content">
         <router-view />
       </el-main>
@@ -45,12 +52,13 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
+import { navigationItems } from './constants/app'
+
 const route = useRoute()
 </script>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Microsoft YaHei', sans-serif; background:#f0f2f5; }
+.app-layout { height: 100vh; }
 .sidebar { background: #0d1b3e; overflow-y:auto; }
 .sidebar .logo-area { display:flex; align-items:center; padding:20px 16px; gap:10px; border-bottom:1px solid #1a2d5a; }
 .logo-text { color:#fff; font-size:16px; font-weight:bold; }
